@@ -34,7 +34,7 @@ class ConnectionManager:
                 "players" : [
                     {"ws": player1_ws, "username": player1_name, "choice": None}
                     {"ws": websocket, "username": username, "choice": None}
-                ]
+                            ]
             }
             match_payload = json.dumps({
                 "type": "match_found",

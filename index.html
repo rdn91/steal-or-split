@@ -1,9 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Split Or Steal</title>
+
+    <script src="https://unpkg.com/@daily-co/daily-js"></script>
 </head>
 <body>
+<div id="lobby-screen" class="start-screen">
+    <h2>Split Or Steal</h2>
+    <h3>Enter a username to play</h3>
+    <input type="text" id="username-input" placeholder="e.g., Shadow77" maxlength="15" >
+    <button id="find-match"><h4>Find Match</h4></button>
+
+    <p id="status-text"></p>
+
+</div>
+
+<div id="game-screen" class="hidden">
+    <div class="header-panel">
+        <div id="player-identity">Identity: Unknown</div>
+        <div id="private-objective">Objective: Waiting ....</div>
+        <div id="timer">60s</div>
+
+    </div>
+
+    <div class="interaction-zone">
+
+        <div id="vid_container"></div>
+
+    <div class="action-bar">
+        <button id="split-button">SPLIT</button>
+        <button id="steal-button">STEAL</button>
+    </div>
+
+    </div>
+
+</div>
 
 </body>
+
+<script src="app.js"></script>
+
 </html>
