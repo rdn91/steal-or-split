@@ -85,12 +85,44 @@ async def handle_game_action(room_id: str, sender_name: str, data: dict):
     room = manager.active_rooms.get(room_id)
     if not room: return
 
-    if data["type"] == "chat_send":
+    # if data["type"] == "chat_send":
+    #     for player in room["players"]:
+    #         if player["username"] != sender_name:
+    #             await player["ws"].send_text(json.dumps({
+    #                 "type": "chat_receive",
+    #                 "sender": sender_name,
+    #                 "message": data["message"]
+    #             }))
+    if data["type"] == "decision_submit":
         for player in room["players"]:
-            if player["username"] != sender_name:
-                await player["ws"].send_text(json.dumps({
-                    "type": "chat_recieve",
-                    "sender" : sender_name,
-                    "message" : data["message"]
-                }))
+            if player["username"] == sender_name:
+                player["choice"] = data["choice"]
+        player1 = room["players"][0]
+        player2 = room["players"][1]
+
+        if player1["choice"] is not None and player2["choice"] is not None:
+            if player1["choice"] == "split" and player2["choice"] == "split":
+                p1_outcome = p2_outcome = "Mutual Win!"
+            elif player1["choice"] == "steal" and player2["choice"] == "steal":
+                p1_outcome = p2_outcome = "Mutual Desctruction. Nobody Wins!"
+            elif player1["choice"] == "steal" and player2["choice"] == "split":
+                p1_outcome = "You Won You stole everything."
+                p2_outcome = "You Lost, You were BETRAYED"
+            elif player1["choice"] == "split" and player2["choice"] == "steal":
+                p2_outcome = "You Won You stole everything."
+                p1_outcome = "You Lost, You were BETRAYED"
+
+            await player1["ws"].send_text(json.dumps({
+                'type': "game_over",
+                'your_choice' : player1["choice"],
+                'opponent_choice' : player2["choice"],
+                'outcome' : p1_outcome
+            }))
+
+            await player2["ws"].send_text(json.dumps({
+                'type' : 'game_over',
+                'your_choice' : player2["choice"],
+                'opponent_choice' : player1["choice"],
+                'outcome' : p2_outcome
+            }))
 
