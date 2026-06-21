@@ -65,7 +65,7 @@ function startMatchMaking() {
         return;
     }
 
-    ws = new WebSocket("ws:localhost:5500/ws/matchmaking/${encodeURIComponent(username)}")
+    ws = new WebSocket("ws:localhost:8000/ws/matchmaking/${encodeURIComponent(username)}")
 
     ws.onmessage = function(event) {
         const data = JSON.parse(event.data);

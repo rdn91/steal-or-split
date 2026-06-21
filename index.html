@@ -9,39 +9,40 @@
     <script src="https://unpkg.com/@daily-co/daily-js"></script>
 </head>
 <body>
-<div id="lobby-screen" class="start-screen">
-    <h2>Split Or Steal</h2>
-    <h3>Enter a username to play</h3>
-    <input type="text" id="username-input" placeholder="e.g., Shadow77" maxlength="15" >
-    <button id="find-match"><h4>Find Match</h4></button>
+<div class="container">
+    <div id="lobby-screen" class="screen">
+        <h2>Split Or Steal</h2>
+        <h3>Enter a username to play</h3>
+        <input type="text" id="username-input" placeholder="e.g., Shadow77" maxlength="15" >
+        <button id="find-match" onclick="startMatchmaking()"><h4>Find Match</h4></button>
 
-    <p id="status-text"></p>
+        <p id="status-text"></p>
 
+    </div>
+
+    <div id="game-screen" class="hidden">
+        <div class="header-panel">
+            <div id="player-identity">Identity: Unknown</div>
+            <div id="private-objective">Objective: Waiting ....</div>
+            <div id="timer">60s</div>
+
+        </div>
+
+        <div class="interaction-zone">
+
+            <div id="vid-container"></div>
+
+        <div class="action-bar">
+            <button id="split-button" onclick="submitDecision('split')" disabled>SPLIT</button>
+            <button id="steal-button" onclick="submitDecision('steal')" disabled></button>STEAL</button>
+        </div>
+
+        </div>
+
+    </div>
 </div>
-
-<div id="game-screen" class="hidden">
-    <div class="header-panel">
-        <div id="player-identity">Identity: Unknown</div>
-        <div id="private-objective">Objective: Waiting ....</div>
-        <div id="timer">60s</div>
-
-    </div>
-
-    <div class="interaction-zone">
-
-        <div id="vid_container"></div>
-
-    <div class="action-bar">
-        <button id="split-button">SPLIT</button>
-        <button id="steal-button">STEAL</button>
-    </div>
-
-    </div>
-
-</div>
+<script src="app.js"></script>
 
 </body>
-
-<script src="app.js"></script>
 
 </html>

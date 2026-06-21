@@ -23,16 +23,16 @@ class ConnectionManager:
             await websocket.send_text(json.dumps({"type": "waiting", "message": "waiting for an opponent.."}))
             return None, None
         else:
-            room_id = str(uuid,uuid4())
+            room_id = str(uuid.uuid4())
             player1_ws = self.waiting_queue
             player1_name = self.waiting_username
 
             self.waiting_queue = None
             self.waiting_username = None
 
-            self.activate_rooms[room_id] = {
+            self.active_rooms[room_id] = {
                 "players" : [
-                    {"ws": player1_ws, "username": player1_name, "choice": None}
+                    {"ws": player1_ws, "username": player1_name, "choice": None},
                     {"ws": websocket, "username": username, "choice": None}
                             ]
             }
@@ -69,7 +69,7 @@ async def websocket_endpoint(websocket: WebSocket, username : str):
     except WebSocketDisconnect:
         if room_id in manager.active_rooms:
             del manager.active_rooms[room_id]
-async def run_timer(room_id: str)
+async def run_timer(room_id: str):
     for i in range(60, -1, -1):
         if room_id not in manager.active_rooms:
             break
@@ -89,8 +89,8 @@ async def handle_game_action(room_id: str, sender_name: str, data: dict):
         for player in room["players"]:
             if player["username"] != sender_name:
                 await player["ws"].send_text(json.dumps({
-                    "type": "chat_recieve"
-                    "sender": sender_name
+                    "type": "chat_recieve",
+                    "sender" : sender_name,
                     "message" : data["message"]
                 }))
 
